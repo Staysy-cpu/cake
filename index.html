@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Си·Торт — кондитерская в Майкопе | Торты на заказ</title>
+<meta name="description" content="Кондитерская «Си·Торт» в Майкопе: торты, пирожные и десерты ручной работы на заказ. Натуральные ингредиенты, доставка по городу.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ================= ТОКЕНЫ ================= */
+  :root{
+    --cream:#FBF6F0;
+    --cream-2:#F3E8DC;
+    --brown:#33231C;
+    --brown-2:#5A4438;
+    --muted:#8A7768;
+    --berry:#B23A5B;
+    --berry-dark:#8E2C47;
+    --gold:#C9A46A;
+    --line:rgba(51,35,28,.12);
+    --r:22px;
+    --shadow:0 22px 45px -26px rgba(51,35,28,.55);
+    --maxw:1180px;
+  }
+
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:'Manrope',system-ui,-apple-system,'Segoe UI',sans-serif;
+    background:var(--cream);
+    color:var(--brown);
+    line-height:1.62;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none}
+  p{margin:0}
+  ul{margin:0;padding:0;list-style:none}
+  img{max-width:100%;display:block}
+
+  h1,h2,h3{
+    font-family:'Playfair Display',Georgia,serif;
+    font-weight:600;
+    line-height:1.12;
+    letter-spacing:-.01em;
+    margin:0;
+  }
+  h1{font-size:clamp(34px,4.6vw,58px)}
+  h2{font-size:clamp(27px,3.2vw,42px)}
+  h3{font-size:20px}
+
+  .container{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .section{padding:92px 0;scroll-margin-top:92px}
+
+  /* ================= КНОПКИ ================= */
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:10px;
+    padding:15px 28px;border-radius:999px;border:1px solid transparent;
+    font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;
+    transition:transform .25s, background .25s, color .25s, border-color .25s, box-shadow .25s;
+    white-space:nowrap;
+  }
+  .btn--primary{background:var(--berry);color:#fff;box-shadow:0 14px 26px -16px rgba(178,58,91,.95)}
+  .btn--primary:hover{background:var(--berry-dark);transform:translateY(-2px)}
+  .btn--ghost{border-color:rgba(51,35,28,.22);color:var(--brown);background:transparent}
+  .btn--ghost:hover{border-color:var(--berry);color:var(--berry);transform:translateY(-2px)}
+  .btn--light{background:#fff;color:var(--berry)}
+  .btn--light:hover{transform:translateY(-2px);box-shadow:0 16px 30px -18px rgba(0,0,0,.6)}
+
+  /* ================= ПЛАШКИ-ЗАГЛУШКИ ДЛЯ ФОТО ================= */
+  .ph{
+    width:100%;height:100%;
+    display:grid;place-items:center;text-align:center;
+    padding:18px;
+    color:rgba(255,255,255,.96);
+    font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+    line-height:1.6;
+    background-image:radial-gradient(rgba(255,255,255,.18) 1.2px, transparent 1.2px);
+    background-size:18px 18px;
+  }
+  .ph--berry{background-color:#B23A5B}
+  .ph--brown{background-color:#7C6252}
+  .ph--gold{background-color:#C9A46A}
+  .ph--rose{background-color:#D2859A}
+  .ph--sage{background-color:#8CA795}
+  .ph--cocoa{background-color:#A9817A}
+
+  /* ================= ХЕДЕР ================= */
+  .header{
+    position:sticky;top:0;z-index:60;
+    background:rgba(251,246,240,.86);
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .header__inner{display:flex;align-items:center;gap:34px;height:78px}
+
+  .logo{display:flex;align-items:center;gap:11px;flex-shrink:0}
+  .logo__mark{
+    width:44px;height:44px;border-radius:50%;
+    background:var(--berry);color:#fff;
+    display:grid;place-items:center;
+    font-family:'Playfair Display',serif;font-size:17px;font-weight:600;
+    letter-spacing:.02em;
+  }
+  .logo__text{
+    font-family:'Playfair Display',serif;font-size:20px;font-weight:600;line-height:1;
+    display:flex;flex-direction:column;gap:5px;
+  }
+  .logo__text small{
+    font-family:'Manrope',sans-serif;font-size:9.5px;font-weight:700;
+    letter-spacing:.22em;text-transform:uppercase;color:var(--muted);
+  }
+
+  .nav{margin-left:auto;display:flex;align-items:center;gap:30px}
+  .nav a{
+    position:relative;font-size:15px;font-weight:600;color:var(--brown-2);
+    padding:4px 0;transition:color .2s;
+  }
+  .nav a::after{
+    content:'';position:absolute;left:0;bottom:0;height:2px;width:0;
+    background:var(--berry);border-radius:2px;transition:width .28s;
+  }
+  .nav a:hover{color:var(--berry)}
+  .nav a:hover::after{width:100%}
+
+  .header__phone{padding:12px 22px;font-size:14px}
+
+  .burger{
+    display:none;flex-direction:column;justify-content:center;gap:5px;
+    width:46px;height:46px;border-radius:50%;
+    border:1px solid var(--line);background:#fff;
+    margin-left:auto;cursor:pointer;padding:0;
+  }
+  .burger span{
+    display:block;width:18px;height:2px;margin:0 auto;
+    background:var(--brown);border-radius:2px;transition:.3s;
+  }
+  .burger.active span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .burger.active span:nth-child(2){opacity:0}
+  .burger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+  /* ================= ГЕРОЙ ================= */
+  .hero{position:relative;overflow:hidden;padding:74px 0 96px}
+  .hero::before{
+    content:'';position:absolute;top:-160px;right:-120px;
+    width:560px;height:560px;border-radius:50%;
+    background:radial-gradient(circle,rgba(201,164,106,.26),transparent 68%);
+    pointer-events:none;
+  }
+  .hero::after{
+    content:'';position:absolute;bottom:-180px;left:-160px;
+    width:460px;height:460px;border-radius:50%;
+    background:radial-gradient(circle,rgba(178,58,91,.13),transparent 68%);
+    pointer-events:none;
+  }
+  .hero__inner{
+    position:relative;z-index:1;
+    display:grid;grid-template-columns:1.05fr .95fr;
+    gap:60px;align-items:center;
+  }
+
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:10px;
+    font-size:11.5px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--berry);margin-bottom:22px;
+  }
+  .eyebrow::before{content:'';width:26px;height:1.5px;background:currentColor;border-radius:2px}
+
+  .hero p.lead{color:var(--brown-2);font-size:17px;max-width:48ch;margin-top:22px}
+  .hero__actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:36px}
+
+  .hero__stats{display:flex;flex-wrap:wrap;gap:42px;margin-top:52px}
+  .hero__stat strong{
+    display:block;font-family:'Playfair Display',serif;
+    font-size:30px;font-weight:600;line-height:1.1;
+  }
+  .hero__stat span{
+    display:block;margin-top:6px;font-size:11px;font-weight:700;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--muted);max-width:130px;
+  }
+
+  .hero__visual{position:relative}
+  .hero__photo{
+    position:relative;aspect-ratio:1/1.06;
+    border-radius:30px;overflow:hidden;box-shadow:var(--shadow);
+  }
+  .hero__card{
+    position:absolute;left:-18px;bottom:28px;
+    background:#fff;border-radius:18px;padding:16px 24px;
+    box-shadow:0 22px 44px -22px rgba(51,35,28,.55);
+    display:flex;flex-direction:column;gap:2px;
+  }
+  .hero__card-label{
+    font-size:10px;font-weight:800;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--berry);
+  }
+  .hero__card strong{font-family:'Playfair Display',serif;font-size:18px;font-weight:600}
+  .hero__card-price{font-size:13px;color:var(--muted);font-weight:600}
+
+  .hero__badge{
+    position:absolute;top:22px;right:-16px;
+    background:var(--brown);color:#fff;border-radius:999px;
+    padding:10px 18px;font-size:14px;font-weight:800;
+    box-shadow:var(--shadow);
+  }
+
+  /* ================= ЗАГОЛОВКИ СЕКЦИЙ ================= */
+  .section-head{
+    display:flex;align-items:flex-end;justify-content:space-between;
+    gap:32px;flex-wrap:wrap;margin-bottom:38px;
+  }
+  .section-head p{max-width:42ch;font-size:15px;color:var(--muted)}
+
+  /* ================= КАТАЛОГ ================= */
+  .filters{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:36px}
+  .filter{
+    padding:11px 22px;border-radius:999px;
+    border:1px solid var(--line);background:#fff;
+    font-family:inherit;font-size:14px;font-weight:700;color:var(--brown-2);
+    cursor:pointer;transition:.22s;
+  }
+  .filter:hover{border-color:var(--berry);color:var(--berry)}
+  .filter.active{background:var(--berry);border-color:var(--berry);color:#fff;box-shadow:0 12px 22px -16px rgba(178,58,91,.95)}
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(258px,1fr));
+    gap:26px;
+  }
+
+  .card{
+    display:flex;flex-direction:column;
+    background:#fff;border:1px solid var(--line);border-radius:var(--r);
+    overflow:hidden;
+    transition:transform .3s, box-shadow .3s, border-color .3s;
+  }
+  .card:hover{transform:translateY(-6px);box-shadow:var(--shadow);border-color:transparent}
+  .card.is-hidden{display:none}
+
+  .card__media{position:relative;aspect-ratio:4/3;overflow:hidden}
+  .card__badge{
+    position:absolute;top:14px;left:14px;
+    background:#fff;color:var(--berry);
+    font-size:10.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+    padding:7px 13px;border-radius:999px;
+  }
+  .card__body{padding:20px 22px 22px;display:flex;flex-direction:column;flex:1;gap:8px}
+  .card__title{font-size:20px}
+  .card__desc{font-size:14px;color:var(--muted);flex:1}
+  .card__foot{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    margin-top:14px;padding-top:16px;border-top:1px dashed var(--line);
+  }
+  .price{font-size:17px;font-weight:800;white-space:nowrap}
+  .price small{font-size:12px;font-weight:600;color:var(--muted)}
+  .card__btn{
+    padding:10px 18px;border-radius:999px;border:none;
+    background:var(--cream-2);color:var(--brown);
+    font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;
+    transition:.22s;
+  }
+  .card__btn:hover{background:var(--berry);color:#fff}
+
+  /* ================= О НАС ================= */
+  .about{background:var(--cream-2)}
+  .about__inner{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+  .about__photo{
+    position:relative;aspect-ratio:4/3.5;
+    border-radius:28px;overflow:hidden;box-shadow:var(--shadow);
+  }
+  .about__note{
+    position:absolute;right:-14px;bottom:26px;
+    background:#fff;border-radius:16px;padding:14px 20px;
+    box-shadow:0 20px 40px -22px rgba(51,35,28,.55);
+    font-size:12px;font-weight:700;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--berry);
+  }
+  .about p{color:var(--brown-2);font-size:15.5px;margin-top:18px}
+  .features{margin-top:30px;display:grid;gap:18px}
+  .features li{display:flex;gap:14px;align-items:flex-start}
+  .features .tick{
+    flex-shrink:0;width:26px;height:26px;border-radius:50%;
+    background:var(--berry);color:#fff;display:grid;place-items:center;
+    font-size:13px;font-weight:800;margin-top:2px;
+  }
+  .features strong{display:block;font-size:15.5px;font-weight:800}
+  .features span{display:block;font-size:14px;color:var(--muted);margin-top:2px}
+
+  /* ================= ОТЗЫВЫ ================= */
+  .reviews__grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(288px,1fr));gap:24px}
+  .review{
+    background:#fff;border:1px solid var(--line);border-radius:var(--r);
+    padding:28px 26px;display:flex;flex-direction:column;gap:14px;
+    transition:transform .3s, box-shadow .3s;
+  }
+  .review:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
+  .stars{color:var(--gold);font-size:15px;letter-spacing:3px}
+  .review__text{font-size:14.8px;color:var(--brown-2);flex:1}
+  .review__author{display:flex;align-items:center;gap:12px;padding-top:14px;border-top:1px solid var(--line)}
+  .avatar{
+    width:42px;height:42px;border-radius:50%;
+    display:grid;place-items:center;flex-shrink:0;
+    font-family:'Playfair Display',serif;font-size:15px;font-weight:600;color:#fff;
+  }
+  .review__name{font-size:14.5px;font-weight:800;line-height:1.3}
+  .review__meta{font-size:12px;color:var(--muted);font-weight:600}
+
+  /* ================= CTA ================= */
+  .cta{background:var(--berry);color:#fff;padding:66px 0}
+  .cta__inner{
+    display:flex;align-items:center;justify-content:space-between;
+    gap:36px;flex-wrap:wrap;
+  }
+  .cta h2{color:#fff;max-width:20ch}
+  .cta p{margin-top:14px;font-size:15.5px;color:rgba(255,255,255,.85);max-width:46ch}
+
+  /* ================= КОНТАКТЫ ================= */
+  .contacts__inner{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+  .contact-list{display:grid;gap:22px;margin-top:32px}
+  .contact-list li{display:flex;gap:16px;align-items:flex-start}
+  .contact-ico{
+    flex-shrink:0;width:44px;height:44px;border-radius:14px;
+    background:#fff;border:1px solid var(--line);
+    display:grid;place-items:center;color:var(--berry);
+  }
+  .contact-ico svg{width:20px;height:20px}
+  .contact-label{
+    display:block;font-size:10.5px;font-weight:800;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--muted);margin-bottom:3px;
+  }
+  .contact-value{font-size:16px;font-weight:700;line-height:1.4}
+  .contact-value a:hover{color:var(--berry)}
+
+  .socials{display:flex;flex-wrap:wrap;gap:10px;margin-top:32px}
+  .socials a{
+    padding:10px 20px;border-radius:999px;border:1px solid var(--line);
+    font-size:13.5px;font-weight:700;color:var(--brown-2);background:#fff;
+    transition:.22s;
+  }
+  .socials a:hover{border-color:var(--berry);color:var(--berry);transform:translateY(-2px)}
+
+  .map{
+    position:relative;aspect-ratio:1/1.02;border-radius:28px;overflow:hidden;
+    box-shadow:var(--shadow);
+  }
+  .map__hint{
+    position:absolute;left:20px;bottom:20px;
+    background:#fff;border-radius:14px;padding:13px 20px;
+    font-size:13px;font-weight:700;box-shadow:0 18px 34px -20px rgba(51,35,28,.6);
+  }
+  .map__hint span{display:block;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+
+  /* ================= ФУТЕР ================= */
+  .footer{background:var(--brown);color:#EADFD5;padding:60px 0 0}
+  .footer__inner{
+    display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:44px;
+    padding-bottom:44px;
+  }
+  .footer .logo__text{color:#fff}
+  .footer .logo__text small{color:rgba(255,255,255,.55)}
+  .footer__about{margin-top:18px;font-size:14px;color:rgba(255,255,255,.6);max-width:34ch}
+  .footer h4{
+    font-family:'Manrope',sans-serif;font-size:11px;font-weight:800;
+    letter-spacing:.18em;text-transform:uppercase;
+    color:rgba(255,255,255,.45);margin:0 0 16px;
+  }
+  .footer__nav a,.footer__contacts a{
+    display:block;font-size:14.5px;font-weight:600;padding:6px 0;
+    color:rgba(255,255,255,.82);transition:color .2s;
+  }
+  .footer__nav a:hover,.footer__contacts a:hover{color:#fff}
+  .footer__contacts p{font-size:14.5px;padding:6px 0;color:rgba(255,255,255,.82)}
+  .footer__bottom{
+    border-top:1px solid rgba(255,255,255,.12);
+    padding:22px 24px 26px;
+    display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+    font-size:12.5px;color:rgba(255,255,255,.45);
+  }
+
+  /* ================= АНИМАЦИЯ ПОЯВЛЕНИЯ ================= */
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease, transform .7s ease}
+  .reveal.visible{opacity:1;transform:none}
+
+  /* ================= АДАПТИВ ================= */
+  @media (max-width:1024px){
+    .hero__inner{grid-template-columns:1fr;gap:52px}
+    .hero__visual{max-width:520px;margin:0 auto;width:100%}
+    .hero p.lead{max-width:60ch}
+    .about__inner{grid-template-columns:1fr;gap:44px}
+    .contacts__inner{grid-template-columns:1fr;gap:44px}
+    .map{aspect-ratio:16/10}
+    .footer__inner{grid-template-columns:1fr 1fr;gap:36px}
+  }
+
+  @media (max-width:900px){
+    .nav{
+      position:fixed;top:78px;left:0;right:0;bottom:auto;
+      flex-direction:column;align-items:stretch;gap:0;
+      background:var(--cream);
+      border-bottom:1px solid var(--line);
+      padding:12px 24px 24px;
+      transform:translateY(-130%);
+      transition:transform .38s cubic-bezier(.4,0,.2,1);
+      box-shadow:0 26px 40px -30px rgba(51,35,28,.6);
+    }
+    .nav.open{transform:translateY(0)}
+    .nav a{padding:14px 0;font-size:17px;border-bottom:1px solid var(--line)}
+    .nav a::after{display:none}
+    .header__phone{display:none}
+    .burger{display:flex}
+  }
+
+  @media (max-width:640px){
+    .container{padding:0 18px}
+    .section{padding:60px 0}
+    .hero{padding:48px 0 64px}
+    .hero__stats{gap:26px;margin-top:38px}
+    .hero__stat strong{font-size:25px}
+    .hero__stat span{font-size:10px}
+    .hero__card{left:0;bottom:16px;padding:13px 18px}
+    .hero__card strong{font-size:16px}
+    .hero__badge{right:0;top:14px;padding:8px 14px;font-size:12.5px}
+    .section-head{margin-bottom:28px}
+    .grid{grid-template-columns:1fr;gap:20px}
+    .filters{gap:8px}
+    .filter{padding:9px 16px;font-size:13px}
+    .cta{padding:52px 0}
+    .cta__inner{gap:26px}
+    .footer__inner{grid-template-columns:1fr;gap:30px;padding-bottom:34px}
+    .footer__bottom{flex-direction:column;gap:8px}
+    .btn{padding:14px 22px;font-size:14.5px}
+    .about__note{right:10px;bottom:16px}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{transition:none!important;animation:none!important}
+    .reveal{opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= ХЕДЕР ================= -->
+<header class="header">
+  <div class="container header__inner">
+    <a href="#top" class="logo" aria-label="Си·Торт — на главную">
+      <span class="logo__mark">Си</span>
+      <span class="logo__text">Си·Торт<small>кондитерская</small></span>
+    </a>
+
+    <nav class="nav" id="nav">
+      <a href="#catalog">Каталог</a>
+      <a href="#about">О нас</a>
+      <a href="#reviews">Отзывы</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+
+    <a href="tel:+79000000000" class="btn btn--ghost header__phone">+7 (900) 000-00-00</a>
+
+    <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="nav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ================= ГЕРОЙ ================= -->
+  <section class="hero">
+    <div class="container hero__inner">
+      <div class="hero__content reveal">
+        <span class="eyebrow">Кондитерская «Си·Торт» · Майкоп</span>
+        <h1>Торты ручной работы, которые хочется запомнить</h1>
+        <p class="lead">
+          Печём на заказ из натуральных ингредиентов — без растительных сливок
+          и лишнего сахара. Соберём вкус под ваш праздник: от бенто-торта на двоих
+          до свадебного яруса.
+        </p>
+        <div class="hero__actions">
+          <a href="#catalog" class="btn btn--primary">Смотреть каталог</a>
+          <a href="#contacts" class="btn btn--ghost">Оставить заявку</a>
+        </div>
+
+        <div class="hero__stats">
+          <div class="hero__stat"><strong>9 лет</strong><span>на собственной кухне</span></div>
+          <div class="hero__stat"><strong>4 800+</strong><span>тортов испечено</span></div>
+          <div class="hero__stat"><strong>4.9 ★</strong><span>рейтинг на Яндекс.Картах</span></div>
+        </div>
+      </div>
+
+      <div class="hero__visual reveal">
+        <div class="hero__photo">
+          <div class="ph ph--rose">Фото: торт недели</div>
+        </div>
+        <div class="hero__card">
+          <span class="hero__card-label">Торт недели</span>
+          <strong>«Красный бархат»</strong>
+          <span class="hero__card-price">от 2 400 ₽ / кг</span>
+        </div>
+        <div class="hero__badge">★ 4.9</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= КАТАЛОГ ================= -->
+  <section class="section" id="catalog">
+    <div class="container">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">Каталог</span>
+          <h2>Свежее из кондитерской</h2>
+        </div>
+        <p>Все торты готовим под заказ — за 24 часа. Минимальный вес торта — 1 кг, десерты и пирожные можно забрать в день обращения.</p>
+      </div>
+
+      <div class="filters reveal" role="tablist" aria-label="Фильтр каталога">
+        <button class="filter active" data-filter="all">Все</button>
+        <button class="filter" data-filter="cakes">Торты</button>
+        <button class="filter" data-filter="pastry">Пирожные</button>
+        <button class="filter" data-filter="desserts">Десерты</button>
+        <button class="filter" data-filter="sets">Наборы</button>
+      </div>
+
+      <div class="grid" id="catalogGrid">
+
+        <article class="card reveal" data-cat="cakes">
+          <div class="card__media">
+            <div class="ph ph--berry">Фото: «Красный бархат»</div>
+            <span class="card__badge">Хит</span>
+          </div>
+          <div class="card__body">
+            <h3 class="card__title">Торт «Красный бархат»</h3>
+            <p class="card__desc">Нежные коржи на кефире, сливочный крем-чиз и ягодная прослойка из малины.</p>
+            <div class="card__foot">
+              <span class="price">2 400 ₽ <small>/ кг</small></span>
+              <a href="#contacts" class="card__btn">Заказать</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card reveal" data-cat="cakes">
+          <div class="card__media">
+            <div class="ph ph--brown">Фото: «Три шоколада»</div>
+          </div>
+          <div class="card__body">
+            <h3 class="card__title">Торт «Три шоколада»</h3>
+            <p class="card__desc">Бельгийский шоколад трёх видов, воздушный мусс и хрустящий слой пралине.</p>
+            <div class="card__foot">
+              <span class="price">2 900 ₽ <small>/ кг</small></span>
+              <a href="#contacts" class="card__btn">Заказать</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card reveal" data-cat="cakes">
+          <div class="card__media">
+            <div class="ph ph--gold">Фото: «Медовик»</div>
+          </div>
+          <div class="card__body">
+            <h3 class="card__title">Торт «Медовик»</h3>
+            <p class="card__desc">Тонкие медовые коржи и крем на сметане — по бабушкиному рецепту.</p>
+            <div class="card__foot">
+              <span class="price">2 100 ₽ <small>/ кг</small></span>
+              <a href="#contacts" class="card__btn">Заказать</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card reveal" data-cat="pastry">
+          <div class="card__media">
+            <div class="ph ph--rose">Фото: пирожное «Павлова»</div>
+            <span class="card__badge">Новинка</span>
+          </div>
+          <div class="card__body">
+            <h3 class="card__title">Пирожное «Павлова»</h3>
+            <p class="card__desc">Хрустящая меренга, сливки 33% и свежая малина. Готовим каждое утро.</p>
+            <div class="card__foot">
+              <span class="price">320 ₽ <small>/ шт</small></span>
+              <a href="#contacts" class="card__btn">Заказать</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card reveal" data-cat="pastry">
+          <div class="card__media">
+            <div class="ph ph--cocoa">Фото: эклер</div>
+          </div>
+          <div class="card__body">
+            <h3 class="card__title">Эклер с заварным кремом</h3>
+            <p class="card__desc">Классический эклер на заварном тесте с ванильным кремом и шоколадной глазурью.</p>
+            <div class="card__foot">
+              <span class="price">180 ₽ <small>/ шт</small></span>
+              <a href="#contacts" class="card__btn">Заказать</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card reveal" data-cat="desserts">
+          <div class="card__media">
+            <div class="ph ph--sage">Фото: чизкейк</div>
+          </div>
+          <div class="card__body">
+            <h3 class="card__title">Чизкейк «Нью-Йорк»</h3>
+            <p class="card__desc">Плотный сливочный чизкейк на песочной основе с тонким слоем карамели.</p>
+            <div class="card__foot">
+              <span class="price">2 600 ₽ <small>/ кг</small></span>
+              <a href="#contacts" class="card__btn">Заказать</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card reveal" data-cat="sets">
+          <div class="card__media">
+            <div class="ph ph--gold">Фото: набор макарон</div>
+          </div>
+          <div class="card__body">
+            <h3 class="card__title">Набор макарон, 12 шт</h3>
+            <p class="card__desc">Шесть вкусов: фисташка, малина, шоколад, лимон, ваниль, солёная карамель.</p>
+            <div class="card__foot">
+              <span class="price">1 400 ₽ <small>/ набор</small></span>
+              <a href="#contacts" class="card__btn">Заказать</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card reveal" data-cat="cakes">
+          <div class="card__media">
+            <div class="ph ph--berry">Фото: бенто-торт</div>
+          </div>
+          <div class="card__body">
+            <h3 class="card__title">Бенто-торт</h3>
+            <p class="card__desc">Мини-торт на двоих с надписью и декором на выбор. Готов за 3 часа.</p>
+            <div class="card__foot">
+              <span class="price">1 900 ₽ <small>/ шт</small></span>
+              <a href="#contacts" class="card__btn">Заказать</a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= О НАС ================= -->
+  <section class="section about" id="about">
+    <div class="container about__inner">
+      <div class="about__visual reveal">
+        <div class="about__photo">
+          <div class="ph ph--brown">Фото: наша кухня</div>
+          <div class="about__note">Печём с 2016 года</div>
+        </div>
+      </div>
+
+      <div class="about__content reveal">
+        <span class="eyebrow">О нас</span>
+        <h2>Маленькая кондитерская с большим вниманием к деталям</h2>
+        <p>
+          «Си·Торт» — это семейная кондитерская в центре Майкопа. Мы начинали
+          с домашних заказов для друзей, а сегодня печём более 40 тортов в неделю
+          и сами отвечаем за каждый этап — от закупки сливок до последнего цветка
+          на декоре.
+        </p>
+        <p>
+          Не работаем с полуфабрикатами: коржи выпекаем утром, крем собираем
+          перед выездом, декор делаем вручную. Поэтому торт приезжает на праздник
+          свежим, а не «с запасом на неделю».
+        </p>
+
+        <ul class="features">
+          <li>
+            <span class="tick">✓</span>
+            <div>
+              <strong>Только натуральные ингредиенты</strong>
+              <span>Сливки 33%, бельгийский шоколад, сливочное масло, сезонные ягоды.</span>
+            </div>
+          </li>
+          <li>
+            <span class="tick">✓</span>
+            <div>
+              <strong>Сборка за несколько часов до праздника</strong>
+              <span>Торт не стоит в витрине — его собирают под вашу дату и время.</span>
+            </div>
+          </li>
+          <li>
+            <span class="tick">✓</span>
+            <div>
+              <strong>Дизайн по вашему референсу</strong>
+              <span>Повторим идею с фото, добавим надпись, фигурки и живой декор.</span>
+            </div>
+          </li>
+          <li>
+            <span class="tick">✓</span>
+            <div>
+              <strong>Доставка по Майкопу</strong>
+              <span>Бесплатно от 3 000 ₽, в удобный интервал времени.</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ОТЗЫВЫ ================= -->
+  <section class="section" id="reviews">
+    <div class="container">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">Отзывы</span>
+          <h2>Нас рекомендуют</h2>
+        </div>
+        <p>Более 300 отзывов на картах и в соцсетях. Ниже — несколько историй наших гостей.</p>
+      </div>
+
+      <div class="reviews__grid">
+
+        <article class="review reveal">
+          <div class="stars" aria-label="Оценка 5 из 5">★★★★★</div>
+          <p class="review__text">
+            «Заказывала «Красный бархат» на день рождения дочки — гости просили
+            добавки. Крем не приторный, коржи влажные, а декор сделали точно
+            по фото, которое я прислала. Спасибо огромное!»
+          </p>
+          <div class="review__author">
+            <span class="avatar" style="background:#B23A5B">М</span>
+            <div>
+              <div class="review__name">Марина К.</div>
+              <div class="review__meta">Торт на 3 кг · Майкоп</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="review reveal">
+          <div class="stars" aria-label="Оценка 5 из 5">★★★★★</div>
+          <p class="review__text">
+            «Брали свадебный торт на 60 человек. Успели точно к сроку, привезли
+            в идеальном виде, ни один ярус не поехал. Вкус — отдельная любовь,
+            особенно «Три шоколада».»
+          </p>
+          <div class="review__author">
+            <span class="avatar" style="background:#8CA795">А</span>
+            <div>
+              <div class="review__name">Артём и Ольга</div>
+              <div class="review__meta">Свадебный торт · 60 гостей</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="review reveal">
+          <div class="stars" aria-label="Оценка 5 из 5">★★★★★</div>
+          <p class="review__text">
+            «Постоянно беру эклеры и макарон к кофе. Всегда свежие, не сравнить
+            с магазинными. И очень приятные люди на кухне — помнят, что я люблю
+            фисташку.»
+          </p>
+          <div class="review__author">
+            <span class="avatar" style="background:#C9A46A">Е</span>
+            <div>
+              <div class="review__name">Екатерина С.</div>
+              <div class="review__meta">Постоянный гость</div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CTA ================= -->
+  <section class="cta">
+    <div class="container cta__inner reveal">
+      <div>
+        <h2>Нужен торт на праздник?</h2>
+        <p>Напишите или позвоните — подберём вкус, вес и декор. Отвечаем в течение 15 минут в рабочее время.</p>
+      </div>
+      <a href="#contacts" class="btn btn--light">Заказать торт</a>
+    </div>
+  </section>
+
+  <!-- ================= КОНТАКТЫ ================= -->
+  <section class="section" id="contacts">
+    <div class="container contacts__inner">
+      <div class="reveal">
+        <span class="eyebrow">Контакты</span>
+        <h2>Заходите в гости или пишите</h2>
+
+        <ul class="contact-list">
+          <li>
+            <span class="contact-ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z"/>
+                <circle cx="12" cy="10" r="2.6"/>
+              </svg>
+            </span>
+            <div>
+              <span class="contact-label">Адрес</span>
+              <div class="contact-value">г. Майкоп, ул. Пролетарская, 00</div>
+            </div>
+          </li>
+
+          <li>
+            <span class="contact-ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6.5 3.5h3l1.5 4-2 1.5a12 12 0 0 0 6 6l1.5-2 4 1.5v3a2 2 0 0 1-2.2 2A17 17 0 0 1 4.5 5.7 2 2 0 0 1 6.5 3.5z"/>
+              </svg>
+            </span>
+            <div>
+              <span class="contact-label">Телефон</span>
+              <div class="contact-value"><a href="tel:+79000000000">+7 (900) 000-00-00</a></div>
+            </div>
+          </li>
+
+          <li>
+            <span class="contact-ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="8.5"/>
+                <path d="M12 7.5V12l3 2"/>
+              </svg>
+            </span>
+            <div>
+              <span class="contact-label">Режим работы</span>
+              <div class="contact-value">Пн–Вс, 09:00–20:00</div>
+            </div>
+          </li>
+
+          <li>
+            <span class="contact-ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="5.5" width="18" height="13" rx="2.5"/>
+                <path d="m3.8 7.2 8.2 5.8 8.2-5.8"/>
+              </svg>
+            </span>
+            <div>
+              <span class="contact-label">Почта</span>
+              <div class="contact-value"><a href="mailto:hello@si-tort.ru">hello@si-tort.ru</a></div>
+            </div>
+          </li>
+        </ul>
+
+        <div class="socials">
+          <a href="#contacts">Telegram</a>
+          <a href="#contacts">WhatsApp</a>
+          <a href="#contacts">Instagram</a>
+          <a href="#contacts">ВКонтакте</a>
+        </div>
+      </div>
+
+      <div class="map reveal">
+        <div class="ph ph--sage">Карта: г. Майкоп</div>
+        <div class="map__hint">Мы здесь<span>5 минут от центра</span></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ================= ФУТЕР ================= -->
+<footer class="footer">
+  <div class="container footer__inner">
+    <div>
+      <a href="#top" class="logo">
+        <span class="logo__mark">Си</span>
+        <span class="logo__text">Си·Торт<small>кондитерская</small></span>
+      </a>
+      <p class="footer__about">
+        Домашняя кондитерская в Майкопе. Торты, пирожные и десерты
+        на заказ из натуральных ингредиентов.
+      </p>
+    </div>
+
+    <div>
+      <h4>Навигация</h4>
+      <nav class="footer__nav">
+        <a href="#catalog">Каталог</a>
+        <a href="#about">О нас</a>
+        <a href="#reviews">Отзывы</a>
+        <a href="#contacts">Контакты</a>
+      </nav>
+    </div>
+
+    <div>
+      <h4>Связаться</h4>
+      <div class="footer__contacts">
+        <a href="tel:+79000000000">+7 (900) 000-00-00</a>
+        <a href="mailto:hello@si-tort.ru">hello@si-tort.ru</a>
+        <p>г. Майкоп, ул. Пролетарская, 00</p>
+        <p>Пн–Вс, 09:00–20:00</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container footer__bottom">
+    <span>© <span id="year">2025</span> «Си·Торт» — кондитерская в Майкопе</span>
+    <span>Демонстрационный макет лендинга для коммерческого предложения</span>
+  </div>
+</footer>
+
+<script>
+  /* ---------- Мобильное меню ---------- */
+  const burger = document.getElementById('burger');
+  const nav = document.getElementById('nav');
+
+  burger.addEventListener('click', () => {
+    const isOpen = nav.classList.toggle('open');
+    burger.classList.toggle('active', isOpen);
+    burger.setAttribute('aria-expanded', String(isOpen));
+    burger.setAttribute('aria-label', isOpen ? 'Закрыть меню' : 'Открыть меню');
+  });
+
+  nav.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      nav.classList.remove('open');
+      burger.classList.remove('active');
+      burger.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  /* ---------- Фильтр каталога ---------- */
+  const filters = document.querySelectorAll('.filter');
+  const cards = document.querySelectorAll('#catalogGrid .card');
+
+  filters.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filters.forEach(f => f.classList.remove('active'));
+      btn.classList.add('active');
+
+      const cat = btn.dataset.filter;
+
+      cards.forEach(card => {
+        const match = cat === 'all' || card.dataset.cat === cat;
+        card.classList.toggle('is-hidden', !match);
+      });
+    });
+  });
+
+  /* ---------- Появление секций при скролле ---------- */
+  const revealItems = document.querySelectorAll('.reveal');
+
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    revealItems.forEach(el => io.observe(el));
+  } else {
+    revealItems.forEach(el => el.classList.add('visible'));
+  }
+
+  /* ---------- Год в футере ---------- */
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
